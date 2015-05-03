@@ -11,7 +11,7 @@ tell application "Mail"
 	end repeat
 end tell
 
-set theScript to "mate --type text.mail.markdown --no-recent --name " & quote & "Raw Mail Message" & quote & " <<< " & quote & theSource & quote
+set theScript to "/usr/local/bin/mate --type text.mail.markdown --no-recent --name " & quote & "Raw Mail Message" & quote & " <<< " & quote & theSource & quote
 
 do shell script theScript
 

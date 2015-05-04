@@ -1,3 +1,4 @@
 *.scpt
 *.zip
 *.bbprojectd
+.DS_Store

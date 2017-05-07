@@ -1,4 +1,11 @@
-- ListHandlers
+
+-- From http://veritrope.com/code/quicksort/
+
+-- -- There are two "handlers" here - 1 - On QuickSort 2 - On ListSort These are from Beginning AppleScript by Stephen Kochan. The ListSort handler is just
+-- a "wrapper" for the QuickSort handler. You call ListSort with a paramater that is a List variable, and ListSort tells QuickSort to sort the List
+-- beginning with the first item of the List and ending with the last item. If you want to begin or end with other items, call QuickSort directly.
+
+-- ListHandlers
 
 on listSort(L)
     return quicksort(L, 1, count L)

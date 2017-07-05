@@ -34,7 +34,7 @@ on run
                 set f to my defaultFolder()
                 make new note at f with properties {body:theNote, name:theTitle}
             end tell
-	    end if
+        end if
     end tell
 end run
 

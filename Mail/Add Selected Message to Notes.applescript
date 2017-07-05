@@ -30,10 +30,10 @@ on run
             set theMessage to item 1 of selectedMessages
             set theTitle to subject of theMessage
             set theNote to content of theMessage
-		    tell application "Notes"
+            tell application "Notes"
                 set f to my defaultFolder()
                 make new note at f with properties {body:theNote, name:theTitle}
-		    end tell
+            end tell
 	    end if
     end tell
 end run

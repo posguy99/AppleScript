@@ -10,7 +10,7 @@ body = '''This is the body of my "email."
 I hope it comes out right.
 
 Regards,
-Dr. Drang
+Test User
 '''
 ascript = '''
 tell application "Mail"

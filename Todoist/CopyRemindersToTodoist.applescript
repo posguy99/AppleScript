@@ -36,7 +36,7 @@ tell application "Reminders"
 		set _tmp to (get due date of currentReminder as text)
 
 		-- remove the commas
-		set _tmp to my replace_chars(_tmp, ",", "")
+		set _tmp to my findAndReplaceInText(_tmp, ",", "")
 
 		-- now we need to fix the time on the end
 		set _tmp to my findAndReplaceInText(_tmp, ":00 AM", " AM")
@@ -50,7 +50,7 @@ tell application "Reminders"
 		set _tmp to (get remind me date of currentReminder as text)
 
 		-- remove the commas
-		set _tmp to my replace_chars(_tmp, ",", "")
+		set _tmp to my findAndReplaceInText(_tmp, ",", "")
 
 		-- now we need to fix the time on the end
 		set _tmp to my findAndReplaceInText(_tmp, ":00 AM", " AM")
@@ -103,15 +103,6 @@ on encode_text(this_text, encode_URL_A, encode_URL_B)
 	end repeat
 	return the encoded_text
 end encode_text
-
-on replace_chars(this_text, search_string, replacement_string)
-	set AppleScript's text item delimiters to the search_string
-	set the item_list to every text item of this_text
-	set AppleScript's text item delimiters to the replacement_string
-	set this_text to the item_list as string
-	set AppleScript's text item delimiters to ""
-	return this_text
-end replace_chars
 
 on findAndReplaceInText(theText, theSearchString, theReplacementString)
 	set AppleScript's text item delimiters to theSearchString

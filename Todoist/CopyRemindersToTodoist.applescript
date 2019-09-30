@@ -6,7 +6,7 @@ set apiCall to "curl https://api.todoist.com/sync/v8/quick/add"
 
 tell application "Reminders"
 
-	set ListOfReminders to "Test"
+	set ListOfReminders to "Comic Con"
 	set notCompleted to reminders in list ListOfReminders whose completed is false
 
 	repeat with currentReminder in notCompleted

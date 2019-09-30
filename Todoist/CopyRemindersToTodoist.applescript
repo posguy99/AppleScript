@@ -12,6 +12,7 @@ tell application "Reminders"
 	repeat with currentReminder in notCompleted
 
 		set taskTitle to (get name of currentReminder)
+
 		set temp to (get priority of currentReminder)
 		set thePriority to 4
 		if (temp = 0) then
@@ -24,10 +25,16 @@ tell application "Reminders"
 			set thePriority to 1
 		end if
 		set taskPriority to (" p" & thePriority)
+
 		set unencodedText to (get body of currentReminder)
 		set taskBody to my encode_text(unencodedText, true, true)
 
-		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & " -d text='" & taskTitle & taskPriority & "'" & " -d note='" & taskBody & "'"
+		set taskDate to (get due date of currentReminder as text)
+		display dialog (taskDate)
+
+		if taskDate is not equal to "" then set taskTitle to (taskTitle & " on " & taskDate)
+
+		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & " -d text='" & taskTitle & taskPriority & "'" & " -d reminder=tomorrow -d note='" & taskBody & "'"
 		set _result to (do shell script postToAPI)
 
 	end repeat

@@ -6,16 +6,28 @@ set apiCall to "curl https://api.todoist.com/sync/v8/quick/add"
 
 tell application "Reminders"
 
-	set ListOfReminders to "Comic Con"
+	set ListOfReminders to "Test"
 	set notCompleted to reminders in list ListOfReminders whose completed is false
 
 	repeat with currentReminder in notCompleted
 
 		set taskTitle to (get name of currentReminder)
+		set temp to (get priority of currentReminder)
+		set thePriority to 4
+		if (temp = 0) then
+			set thePriority to 4
+		else if (temp = 9) then
+			set thePriority to 3
+		else if (temp = 5) then
+			set thePriority to 2
+		else if (temp = 1) then
+			set thePriority to 1
+		end if
+		set taskPriority to (" p" & thePriority)
 		set unencodedText to (get body of currentReminder)
 		set taskBody to my encode_text(unencodedText, true, true)
 
-		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & " -d text='" & taskTitle & "'" & " -d note='" & taskBody & "'"
+		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & " -d text='" & taskTitle & taskPriority & "'" & " -d note='" & taskBody & "'"
 		set _result to (do shell script postToAPI)
 
 	end repeat

@@ -1,7 +1,7 @@
 
 set remindersOpen to application "Reminders" is running
 
-set todoistToken to "e3e9074ef60cce6e6dbb7b0e506c1d2b11ccb09c"
+set todoistToken to "b72150682f676f4f5dec879ea0c148baddc32f83"
 set apiCall to "curl https://api.todoist.com/sync/v8/quick/add"
 
 tell application "Reminders"
@@ -56,14 +56,13 @@ tell application "Reminders"
 		set _tmp to my findAndReplaceInText(_tmp, ":00 AM", " AM")
 		set _tmp to my findAndReplaceInText(_tmp, ":00 PM", " PM")
 
-		if _tmp is not equal to "" then set taskReminder to " -reminder=" & "'" & _tmp & "'"
+		if _tmp is not equal to "" then set taskReminder to " -d reminder=" & "'" & _tmp & "'"
 
 		set unencodedText to (get body of currentReminder)
 		set _tmp to my encode_text(unencodedText, true, true)
 		set taskBody to " -d note=" & "'" & _tmp & "'"
 
 		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & taskTitle & taskReminder & taskBody
-		display dialog postToAPI
 		set _result to (do shell script postToAPI)
 
 	end repeat
@@ -104,3 +103,21 @@ on encode_text(this_text, encode_URL_A, encode_URL_B)
 	end repeat
 	return the encoded_text
 end encode_text
+
+on replace_chars(this_text, search_string, replacement_string)
+	set AppleScript's text item delimiters to the search_string
+	set the item_list to every text item of this_text
+	set AppleScript's text item delimiters to the replacement_string
+	set this_text to the item_list as string
+	set AppleScript's text item delimiters to ""
+	return this_text
+end replace_chars
+
+on findAndReplaceInText(theText, theSearchString, theReplacementString)
+	set AppleScript's text item delimiters to theSearchString
+	set theTextItems to every text item of theText
+	set AppleScript's text item delimiters to theReplacementString
+	set theText to theTextItems as string
+	set AppleScript's text item delimiters to ""
+	return theText
+end findAndReplaceInText

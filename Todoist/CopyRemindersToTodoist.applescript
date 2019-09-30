@@ -14,8 +14,11 @@ tell application "Reminders"
 
 	repeat with currentReminder in notCompleted
 
-		set taskTitle to (get name of currentReminder)
+		-- create title of task
+		set _tmp to (get name of currentReminder)
+		set taskTitle to " -d text=" & "'" & _tmp
 
+		-- get the priority
 		set temp to (get priority of currentReminder)
 		set thePriority to 4
 		if (temp = 0) then
@@ -27,16 +30,40 @@ tell application "Reminders"
 		else if (temp = 1) then
 			set thePriority to 1
 		end if
-		set taskPriority to (" p" & thePriority)
+		set taskTitle to (taskTitle & " p" & thePriority)
+
+		-- is there a due date?
+		set _tmp to (get due date of currentReminder as text)
+
+		-- remove the commas
+		set _tmp to my replace_chars(_tmp, ",", "")
+
+		-- now we need to fix the time on the end
+		set _tmp to my findAndReplaceInText(_tmp, ":00 AM", " AM")
+		set _tmp to my findAndReplaceInText(_tmp, ":00 PM", " PM")
+
+		if _tmp is not equal to "" then set taskTitle to (taskTitle & " on " & _tmp)
+		set taskTitle to (taskTitle & "'")
+
+		-- is there a reminder date and time?
+		set taskReminder to ""
+		set _tmp to (get remind me date of currentReminder as text)
+
+		-- remove the commas
+		set _tmp to my replace_chars(_tmp, ",", "")
+
+		-- now we need to fix the time on the end
+		set _tmp to my findAndReplaceInText(_tmp, ":00 AM", " AM")
+		set _tmp to my findAndReplaceInText(_tmp, ":00 PM", " PM")
+
+		if _tmp is not equal to "" then set taskReminder to " -reminder=" & "'" & _tmp & "'"
 
 		set unencodedText to (get body of currentReminder)
-		set taskBody to my encode_text(unencodedText, true, true)
+		set _tmp to my encode_text(unencodedText, true, true)
+		set taskBody to " -d note=" & "'" & _tmp & "'"
 
-		set taskDate to (get due date of currentReminder as text)
-
-		if taskDate is not equal to "" then set taskTitle to (taskTitle & " on " & taskDate)
-
-		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & " -d text='" & taskTitle & taskPriority & "'" & " -d reminder=tomorrow -d note='" & taskBody & "'"
+		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & taskTitle & taskReminder & taskBody
+		display dialog postToAPI
 		set _result to (do shell script postToAPI)
 
 	end repeat

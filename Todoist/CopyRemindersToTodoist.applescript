@@ -6,7 +6,10 @@ set apiCall to "curl https://api.todoist.com/sync/v8/quick/add"
 
 tell application "Reminders"
 
-	set ListOfReminders to "Test"
+	set theLists to the name of every list
+	set ListOfReminders to (choose from list theLists) as text
+
+	-- set ListOfReminders to "Test"
 	set notCompleted to reminders in list ListOfReminders whose completed is false
 
 	repeat with currentReminder in notCompleted
@@ -30,7 +33,6 @@ tell application "Reminders"
 		set taskBody to my encode_text(unencodedText, true, true)
 
 		set taskDate to (get due date of currentReminder as text)
-		display dialog (taskDate)
 
 		if taskDate is not equal to "" then set taskTitle to (taskTitle & " on " & taskDate)
 

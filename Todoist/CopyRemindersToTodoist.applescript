@@ -4,6 +4,8 @@ set remindersOpen to application "Reminders" is running
 set todoistToken to "b72150682f676f4f5dec879ea0c148baddc32f83"
 set apiCall to "curl https://api.todoist.com/sync/v8/quick/add"
 
+set listOfCommands to {}
+
 tell application "Reminders"
 
 	set theLists to the name of every list
@@ -34,6 +36,7 @@ tell application "Reminders"
 
 		-- is there a due date?
 		set _tmp to (get due date of currentReminder as text)
+		if (_tmp = "Missing Value") then set _tmp to ""
 
 		-- remove the commas
 		set _tmp to my findAndReplaceInText(_tmp, ",", "")
@@ -48,6 +51,7 @@ tell application "Reminders"
 		-- is there a reminder date and time?
 		set taskReminder to ""
 		set _tmp to (get remind me date of currentReminder as text)
+		if (_tmp = "Missing Value") then set _tmp to ""
 
 		-- remove the commas
 		set _tmp to my findAndReplaceInText(_tmp, ",", "")
@@ -63,13 +67,21 @@ tell application "Reminders"
 		set taskBody to " -d note=" & "'" & _tmp & "'"
 
 		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & taskTitle & taskReminder & taskBody
-		set _result to (do shell script postToAPI)
+
+		copy postToAPI to the end of listOfCommands
+		-- set _result to do shell script postToAPI with administrator privileges
 
 	end repeat
 
 	if not remindersOpen then quit
 
 end tell
+
+-- now execute each command
+
+repeat with theCommand in listOfCommands
+	set _result to do shell script theCommand
+end repeat
 
 -- A sub-routine for encoding high-ASCII characters
 -- From http://www.macosxautomation.com/applescript/sbrt/sbrt-08.html

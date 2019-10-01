@@ -69,7 +69,6 @@ tell application "Reminders"
 		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & taskTitle & taskReminder & taskBody
 
 		copy postToAPI to the end of listOfCommands
-		-- set _result to do shell script postToAPI with administrator privileges
 
 	end repeat
 

@@ -1,0 +1,38 @@
+tell application "Numbers"
+	activate
+		tell document 1
+			tell active sheet
+                set activeTable to (the first table whose class of selection range is range)
+                tell activeTable
+                        -- set theValue to formatted value of first cell of range
+                        set theValue to formatted value of cell 1 of the selection range
+				end tell
+            end tell
+        end tell
+end tell
+
+tell application "Messages"
+	set targetBuddy to theValue
+	set targetService to "SMS"
+	set textMessage to "this is a test message"
+	set theBuddy to buddy targetBuddy of service targetService
+	send textMessage to theBuddy
+end tell
+
+
+
+
+
+
+
+My solution is to tell Applescript to press "Command + N", which is the shortkey for "Start a new conversation"
+
+activate application "Messages"
+   tell application "System Events" to tell process "Messages"
+   key code 45 using command down           -- press Command + N to start a new window
+   keystroke "<replace with phone number>"  -- input the phone number
+   key code 36                              -- press Enter to focus on the message area
+   keystroke "<replace with message>"       -- type some message
+   key code 36                              -- press Enter to send
+end tell
+This script will start a new conversation and send the message to the phone number through iMessage

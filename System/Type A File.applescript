@@ -5,7 +5,8 @@
 set theFile to choose file with prompt "Please select a file:"
 
 # Read lines from file.
-set lns to paragraphs of (read file theFile as «class utf8»)
+# set lns to paragraphs of (read file theFile as «class utf8»)
+set lns to paragraphs of (read file theFile)
 
 # NetLab is open in Safari
 tell application "Safari" to activate
@@ -13,7 +14,7 @@ tell application "Safari" to activate
 tell application "System Events"
     delay 1
     repeat with ln in lns
-        delay 1
+        # delay 1
         keystroke ln
         delay 1
         keystroke Return

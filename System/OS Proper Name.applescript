@@ -5,6 +5,6 @@ set AppleScript's text item delimiters to _delim
 
 
 set osList to { "Cheetah", "Puma", "Jaguar", "Panther", "Tiger", "Leopard", "Snow Leopard",¬
-                "Lion", "Mountain Lion", "Mavericks", "Yosemite", "El Capitan", "Sierra", "High Sierra"}
+                "Lion", "Mountain Lion", "Mavericks", "Yosemite", "El Capitan", "Sierra", "High Sierra", "Mojave", "Catalina"}
 
 return item (os_version+1) of osList

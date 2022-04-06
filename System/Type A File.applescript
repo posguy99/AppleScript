@@ -9,7 +9,7 @@ set theFile to choose file with prompt "Please select a file:"
 set lns to paragraphs of (read file theFile)
 
 # NetLab is open in Safari
-tell application "Safari" to activate
+tell application "Chrome" to activate
 
 tell application "System Events"
     delay 1

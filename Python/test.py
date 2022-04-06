@@ -19,5 +19,5 @@ tell application "Mail"
 end tell
 '''.format(asquote(subject), asquote(body))
 
-print ascript
+print(ascript)
 asrun(ascript)

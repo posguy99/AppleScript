@@ -66,7 +66,7 @@ tell application "Reminders"
 		set _tmp to my encode_text(unencodedText, true, true)
 		set taskBody to " -d note=" & "'" & _tmp & "'"
 
-		set postToAPI to apiCall & " -d token='" & todoistToken & "'" & taskTitle & taskReminder & taskBody
+		set postToAPI to apiCall & " -H 'Authorization: Bearer " & todoistToken & "'" & taskTitle & taskReminder & taskBody
 
 		copy postToAPI to the end of listOfCommands
 
